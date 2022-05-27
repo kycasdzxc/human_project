@@ -1,0 +1,211 @@
+@font-face {
+    font-family: 'over';
+    src: url(../font/AnyConv.com__koverwatch.woff);
+}
+
+/* body */
+body {margin: 0; font-family: 'over'; font-size: 18px; color: rgb(80, 80, 80);}
+
+/* header */
+header {background: #fee;}
+header .homebox {width: 1024px; height: 150px; margin: 0 auto; background-size: 100%; background-repeat: no-repeat;
+    background-image: url(../images/dong_main.png);}
+header .logo {
+    width: 200px; height: 100px; margin: 50px 400px 0 50px; float: left;
+    background-image: url(../images/logo.png);
+    background-size: 100%; background-repeat: no-repeat;
+}
+
+/* nav : 메뉴 */
+nav {
+    clear: both; background: rgb(250, 255, 201);
+    border-top: 5px double burlywood;
+    border-bottom: 3px solid burlywood;
+}
+.menubox {width:1024px; height: 40px; margin: 0 auto;
+}
+nav li {float: left; margin: 0 20px; list-style: none;}
+nav li a {text-decoration: none; color: black;}
+nav li a:hover {color: blueviolet;}
+
+/* main */
+main {width: 1024px; margin: 30px auto; min-height: 569px;}
+
+/* 메인페이지 */
+.index {display: inline-flex}
+.index::after {content: ''; display: block; clear: both;}
+.index .box h2, .index .box h3 {margin: 10px 0;}
+.index p {margin: 0;}
+
+/* index : top */
+.index .top {
+    height: 230px; background-size: 110%; background-position: -40px -210px; background-repeat: no-repeat;
+    background-image: url(../images/index_top.png);
+}
+
+/* index : middle */
+.index .character {
+    display: inline-flex;
+}
+
+.index .character h3 {margin: 0;}
+.index .profile {
+    width: 100px; height: 100px;
+    border: 3px solid rgb(208, 95, 20); padding: 0;
+}
+
+/* index : bottom */
+.index .bottom1 {
+    height: 260px; background-size: 120%; background-position: -78px -310px; background-repeat: no-repeat;
+    background-image: url(../images/index_bottom1.png);
+}
+.index .bottom2 {
+    height: 260px; background-size: 130%; background-position: -115px -320px; background-repeat: no-repeat;
+    background-image: url(../images/index_bottom2.png);
+}
+.index .bottom3 {
+    height: 260px; background-size: 100%; background-position-y: -180px; background-repeat: no-repeat;
+    background-image: url(../images/dong_20th.jpg);
+}
+
+/* index : sidebar */
+.index .sidebar a div {
+    margin: 35px auto 10px; padding: 10px; width: 80%; background-color: gold;
+    border: 1px solid black; border-radius: 10px;
+}
+.index .sidebar hr {margin: 10px;}
+.index .sidebar a {text-align: center; text-decoration: none; color: rgb(80, 80, 80)}
+.index .sidebar a:hover {color: blueviolet;}
+.index .sidebar p {text-align: center;}
+
+/* 공지사항 */
+.notice table {width: 700px; margin: 0 auto; border-collapse: collapse; table-layout: fixed;}
+.notice th {border-top: 3px solid blue; border-bottom: 3px solid blue;}
+.notice td {border-bottom: 1px solid gray;}
+.notice .col1, .notice .col4 {width: 8%;}
+.notice .col3, .notice .col5 {width: 14%;}
+.notice th, .notice td {padding: 10px;}
+.notice td + td {
+    text-align: left; white-space: nowrap; overflow: hidden;
+    text-overflow: ellipsis;
+}
+.notice td, .notice td + td + td {text-align: center;}
+.notice a {text-decoration: none; color: rgb(80, 80, 80);}
+.notice a:hover {color: blueviolet;}
+.notice a + span {font-size: .7em; color: black}
+.notice .face {width: 8px;}
+
+.notice .number {width: 350px; margin: 0 auto;}
+.notice .number::after {content: ''; display: block; clear: both;}
+.notice .number div {
+    width:30px; height: 26px; background: rgb(188, 223, 236); border-radius: 5px;
+    text-align: center; margin: 20px 10px 0px; padding: 4px 0 0; float: left;
+}
+.notice .number .select {background: rgb(253, 198, 94); text-decoration: underline;}
+
+/* 자유게시판 */
+.free table {width: 700px; margin: 0 auto; border-collapse: collapse; table-layout: fixed;}
+.free th {border-top: 3px solid blue; border-bottom: 3px solid blue;}
+.free td {border-bottom: 1px solid gray;}
+.free .col1, .free .col4 {width: 8%;}
+.free .col3, .free .col5 {width: 14%;}
+.free th, .free td {padding: 10px;}
+.free td + td {text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.free td, .free td + td + td {text-align: center;}
+.free a {text-decoration: none; color: rgb(80, 80, 80);}
+.free a:hover {color: blueviolet;}
+.free a + span {font-size: .7em; color: black}
+img.face {width: 12px;}
+.free .button {width: 700px; margin: 20px auto 5px; text-align: right;}
+.free .button a {
+    background: rgb(138, 233, 138); border-radius: 3px;
+    padding: 6px 8px; margin: 25px; text-decoration: none; color: black;
+}
+.free .button a:hover {color: blueviolet;}
+.free .number {width: 350px; margin: 0 auto;}
+.free .number::after {content: ''; display: block; clear: both;}
+.free .number div {
+    width:30px; height: 26px; background: rgb(188, 223, 236); border-radius: 5px;
+    text-align: center; margin: 10px 10px 0px; padding: 4px 0 0; float: left;
+}
+.free .number .select {background: rgb(253, 198, 94); text-decoration: underline;}
+
+/* 게시판 글쓰기 */
+.write {
+    width: 700px; margin: 0 auto;
+    border-top: 3px solid gray; border-bottom: 3px solid gray;
+}
+.write input {width: 676px; padding: 10px; margin: 12px auto 0;}
+.write .text {table-layout: fixed;
+    height: 300px; white-space: pre-line; word-break: break-all;
+}
+.write .button {padding: 0 200px; margin: 15px auto;}    
+.write .button a {
+    border: 1px solid black; background: gainsboro;
+    margin: 10px; padding: 5px;
+    text-decoration: none; color: black;
+}
+.write .button a:hover {color: blueviolet;}
+.write p {text-align: center;}
+
+/* 게시판 상세 */
+.detail {
+    width: 700px; margin: 0 auto;
+    border-top: 3px solid gray; border-bottom: 3px solid gray;
+}
+.detail .name {margin: 0 0 0 15px; float: left;}
+.detail .date {margin: 0 15px 0 0; float: right;}
+.detail .box {
+    white-space: pre-line; padding: 10px;
+    border: 1px solid black;
+}
+.detail hr {clear: both;}
+.detail p {text-align: center;}
+.detail .button {padding: 0 200px; margin: 15px auto;}    
+.detail .button a {
+    border: 1px solid black; background: gainsboro;
+    margin: 10px; padding: 5px;
+    text-decoration: none; color: black;
+}
+.detail .button a:hover {color: blueviolet;}
+
+/* 회원가입 */
+.sign {
+    width: 300px; margin: 50px auto 100px; padding: 30px 40px 50px;
+    border-radius: 30px; background-color: rgb(167, 193, 204);
+}
+.sign h1 {text-align: center;}
+.sign h3 {color: darkslateblue; margin: 10px auto;}
+.sign .name, .sign .id, .sign .pw {width: 500px; margin: 0 auto 10px; padding: 12px;}
+.sign .box {width: 500px; margin: 20px auto; padding: 9px;}
+
+/* 로그인 */
+.login {
+    width: 300px; margin: 50px auto 150px; padding: 30px 40px 50px;
+    border-radius: 30px; background-color: rgb(167, 193, 204);
+}
+.login h1 {text-align: center;}
+.login h3 {color: darkslateblue; margin: 10px auto;}
+.login .id, .login .pw {width: 272px; margin: 0 auto 10px; padding: 12px;}
+.login .box {width: 200px; margin: 20px auto; padding: 9px;}
+
+/* 회원가입 약관 */
+.contract {
+    width: 700px; margin: 50px auto 80px; padding: 30px 40px 50px;
+    border-radius: 30px; background-color: rgb(167, 193, 204); 
+}
+.contract h1 {text-align: center;}
+.contract .text {
+    height: 230px; border: 1px solid black; background-color: white;
+    white-space: pre-line; overflow-y: scroll; margin: 0 auto 20px;
+}
+.contract p {text-align: right;}
+.contract .box {width: 100px; height: 40px;  padding: 8px; margin: 0 3px;}
+
+/* footer */
+footer {
+	height: 70px; padding: 20px; background: #fee; text-align: center;
+}
+
+a.link { text-decoration: none; color: rgb(80, 80, 80); }
+a.link:hover { color: blueviolet; }
