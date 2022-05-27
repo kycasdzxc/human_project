@@ -504,7 +504,7 @@
                   str +='            <div class="col-7">'
                   str +='            <div class="">'
                   str +='                <h3 class="heading mb-3">'+room.roomName+'</h3>'
-                  str +='                <p class="text-dark">가격  <span class="float-right">'+room.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+'</span></p>'
+                  str +='                <p class="text-dark">가격  <span class="float-right">'+room.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+' 원</span></p>'
                   str +='                <hr>'
                   str +='                <form action="/reservation/reserve" name="filterFrm">'   
                   str +='                      <input type="hidden" name="pensionid" value="' + pensionid + '" />'
