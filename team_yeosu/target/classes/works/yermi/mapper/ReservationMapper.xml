@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="works.yermi.mapper.ReservationMapper">
+ 	<select id="getList" resultType="reservation">
+ 		SELECT
+	 		V.RESERVATIONNUM,
+		    V.USERID, V.RESERVATIONSTATUS,
+		    TO_CHAR(V.CHECKIN, 'YY/MM/DD') CHECKIN, TO_CHAR(V.CHECKOUT, 'YY/MM/DD') CHECKOUT,
+		    P.NAME, R.ROOMNAME FROM TBL_PENSION P
+		JOIN TBL_RESERVATION V USING(PENSIONID)
+		JOIN TBL_ROOM R USING(ROOMNUM)
+ 	</select>
+ 	
+ 	<select id="getListByUserid" resultType="reservation">
+ 		SELECT
+ 			V.RESERVATIONNUM,
+		    V.USERID, V.RESERVATIONSTATUS,
+		    TO_CHAR(V.CHECKIN, 'YY/MM/DD') CHECKIN, TO_CHAR(V.CHECKOUT, 'YY/MM/DD') CHECKOUT,
+		    P.NAME, R.ROOMNAME FROM TBL_PENSION P
+		JOIN TBL_RESERVATION V USING(PENSIONID)
+		JOIN TBL_ROOM R USING(ROOMNUM)
+ 		WHERE V.USERID = #{userid}
+ 	</select>
+ 	
+ 	<select id="getListByPensionid" resultType="reservation">
+ 		SELECT
+		    B.RESERVATIONNUM,
+		    R.ROOMNAME, B.USERID, B.RESERVATIONSTATUS,
+		    B.CHECKIN, B.CHECKOUT
+		FROM
+		    (SELECT
+		    	V.RESERVATIONNUM,
+		        V.USERID, V.RESERVATIONSTATUS,
+		        TO_CHAR(V.CHECKIN, 'YY/MM/DD') CHECKIN,
+		        TO_CHAR(V.CHECKOUT, 'YY/MM/DD') CHECKOUT,
+		        P.NAME, V.ROOMNUM
+		        FROM TBL_PENSION P
+		    JOIN TBL_RESERVATION V USING(PENSIONID)
+		    WHERE PENSIONID = #{pensionid}) B
+		    , TBL_ROOM R
+		WHERE B.ROOMNUM = R.ROOMNUM
+ 	</select>
+ 	
+ 	<select id="getListCheckReservation" resultType="reservation">
+ 		SELECT
+		    B.RESERVATIONNUM,
+		    R.ROOMNAME, B.USERID, B.RESERVATIONSTATUS,
+		    B.CHECKIN, B.CHECKOUT
+		FROM
+		    (SELECT
+		    	V.RESERVATIONNUM,
+		        V.USERID, V.RESERVATIONSTATUS,
+		        TO_CHAR(V.CHECKIN, 'YY/MM/DD') CHECKIN,
+		        TO_CHAR(V.CHECKOUT, 'YY/MM/DD') CHECKOUT,
+		        P.NAME, V.ROOMNUM
+		        FROM TBL_PENSION P
+		    JOIN TBL_RESERVATION V USING(PENSIONID)
+		    WHERE
+			    PENSIONID = #{pensionid}
+			    AND V.CHECKIN > SYSDATE
+			    AND V.RESERVATIONSTATUS = '1') B
+		    , TBL_ROOM R
+		WHERE B.ROOMNUM = R.ROOMNUM
+ 	</select>
+ 	
+ 	<select id="checkDate" resultType="reservation">
+ 		SELECT * FROM TBL_RESERVATION
+		<![CDATA[
+		WHERE
+			((CHECKIN >= #{checkin} AND CHECKIN < #{checkout})
+			OR (CHECKOUT > #{checkin} AND CHECKOUT <= #{checkout}))
+			AND ROOMNUM = #{roomNum} AND RESERVATIONSTATUS = '1'
+		]]>
+ 	</select>
+ 	
+ 	<select id="read" resultType="reservation">
+ 		SELECT * FROM TBL_RESERVATION WHERE RESERVATIONNUM = #{reservationNum}
+ 	</select>
+ 	
+ 	<insert id="insert">
+ 		INSERT INTO TBL_RESERVATION (RESERVATIONNUM, CHECKIN, CHECKOUT, ROOMNUM, USERID, PENSIONID)
+		VALUES (#{reservationNum}, TO_DATE(#{checkin}, 'YY/MM/DD'), TO_DATE(#{checkout}, 'YY/MM/DD'), #{roomNum}, #{userid}, #{pensionid})
+ 	</insert>
+ 	
+ 	
+ 	<update id="updateStatus">
+ 		UPDATE TBL_RESERVATION SET
+		RESERVATIONSTATUS = 0 WHERE RESERVATIONNUM = #{reservationNum}
+ 	</update>
+ 	
+ 	<delete id="delete">
+ 		DELETE TBL_RESERVATION WHERE RESERVATIONNUM = #{reservationNum}
+ 	</delete>
+ 	
+ 	<select id="sumPrice" resultType="int">
+ 		SELECT SUM(PAYMENTPRICE) FROM TBL_PAYMENT
+		WHERE
+		    TO_CHAR(PAYMENTDATE, 'YY') = TO_CHAR(SYSDATE, 'YY')
+		    AND TO_CHAR(PAYMENTDATE, 'MM') = TO_CHAR(SYSDATE, 'MM')
+		    AND PENSIONID = #{pensionid}
+		    AND PAYMENTSTATUS = '1'
+ 	</select>
+ 	
+ 	<select id="checkReservation" resultType="int">
+ 		SELECT COUNT(*) FROM TBL_RESERVATION
+ 		WHERE PENSIONID = #{pensionid} AND CHECKIN > SYSDATE
+ 		AND RESERVATIONSTATUS = '1'
+ 	</select>
+ 	
+ 	<select id="reservationAtMonth" resultType="int">
+ 		SELECT COUNT(*) FROM TBL_PAYMENT
+		WHERE
+		    TO_CHAR(PAYMENTDATE, 'YY') = TO_CHAR(SYSDATE, 'YY')
+		    AND TO_CHAR(PAYMENTDATE, 'MM') = TO_CHAR(SYSDATE, 'MM')
+		    AND PENSIONID = #{pensionid}
+		    AND PAYMENTSTATUS = '1'
+ 	</select>
+ </mapper> 

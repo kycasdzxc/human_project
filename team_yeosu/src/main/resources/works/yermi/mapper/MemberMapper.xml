@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="works.yermi.mapper.MemberMapper">
+  	
+  	<select id="read" resultType="member" resultMap="memberMap">
+	    SELECT * 
+	    FROM TBL_MEMBER
+		JOIN TBL_AUTH
+		USING(USERID)
+		WHERE USERID = #{userId}
+  	</select>
+  	
+  	<select id="hasMember" resultType="member">
+	    SELECT * 
+	    FROM TBL_MEMBER 
+	    <choose>
+	    	<when test ="userId != null">
+	   		WHERE USERID = #{userId}	
+	    	</when>
+	    	<when test ="nickName != null">
+	   		WHERE NICKNAME = #{nickName}	
+	    	</when>
+	    	<when test ="email != null">
+	   		WHERE EMAIL = #{email}	
+	    	</when>
+	    </choose>
+  	</select>
+  	
+  	<select id="hasMemberUsingModify" resultType="member">
+  		SELECT * 
+	    FROM TBL_MEMBER
+	    WHERE USERID != #{userId}
+	    <choose>
+		    <when test ="nickName != null">
+		   	AND NICKNAME = #{nickName}	
+		    </when>
+		    <when test ="email != null">
+		   	AND EMAIL = #{email}
+		   	</when>
+	   	</choose>
+  	</select>
+  	
+  	<select id="readList" resultMap="memberMap">
+  		SELECT * FROM (
+		    SELECT /*+ INDEX(M IDX_MEMBER_DATE_DESC) */ M.*, AUTH, ROWNUM RN 
+		    FROM TBL_MEMBER M 
+		    JOIN TBL_AUTH A 
+		    ON M.USERID = A.USERID
+		    WHERE ROWNUM &lt;= #{amount} * #{pageNum}
+		) WHERE RN > #{amount} * (#{pageNum}-1)
+  	</select>
+  	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) FROM TBL_MEMBER 
+		WHERE ROWNUM > 0
+	</select>
+  	
+  	<insert id="insertMember">
+  		INSERT INTO TBL_MEMBER (USERID, PW, EMAIL, PHONE, ROADADDR, ADDRDETAIL, ZIPNO, JIBUNADDR, NAME , NICKNAME, PHONE2, PHONE3) 
+		VALUES (#{userId}, #{pw}, #{email}, #{phone}, #{roadAddr}, #{addrDetail}, #{zipNo}, #{jibunAddr}, #{name}, #{nickName}, #{phone2}, #{phone3})
+  	</insert>
+  	
+  	<!-- <insert id="insertMember">
+  		INSERT INTO TBL_MEMBER (USERID, PW, NAME, NICKNAME)
+  		VALUES (#{userId}, #{pw}, #{name}, #{nickName})
+  	</insert> -->
+  	
+  	<insert id="insertAuth">
+		INSERT INTO TBL_AUTH (AUTH,USERID) 
+		VALUES (#{auth}, #{userId})
+  	</insert>
+  	
+  	<update id="updateMember">
+  		UPDATE TBL_MEMBER SET
+  		<if test="pw != null and pw != ''"> 
+  		PW = #{pw},
+  		</if>
+  		EMAIL = #{email}, 
+  		PHONE= #{phone},
+  		POINT = #{point},
+  		ROADADDR= #{roadAddr}, 
+  		ADDRDETAIL= #{addrDetail}, 
+  		ZIPNO = #{zipNo}, 
+  		JIBUNADDR = #{jibunAddr}, 
+  		NAME = #{name}  ,
+  		NICKNAME = #{nickName},
+  		PHONE2= #{phone2},
+  		PHONE3= #{phone3}  
+  		WHERE USERID = #{userId}
+  	</update>
+  	<update id="updateAuth">
+  		UPDATE TBL_AUTH SET 
+  		AUTH = #{auth} 
+  		WHERE USERID = #{userId}
+  	</update>
+  	
+  	<update id="updateMemberList">
+  		UPDATE TBL_MEMBER SET 
+  		EMAIL = #{email}, 
+  		PHONE= #{phone},
+  		ROADADDR= #{roadAddr}, 
+  		ADDRDETAIL= #{addrDetail}, 
+  		ZIPNO = #{zipNo}, 
+  		JIBUNADDR = #{jibunAddr}, 
+  		NAME = #{name}  ,
+  		NICKNAME = #{nickName},
+  		PHONE2= #{phone2},
+  		PHONE3= #{phone3}  
+  		WHERE USERID = #{userId}
+  	</update>
+  	
+  	<update id="updateAuthEmail">
+  		UPDATE TBL_MEMBER SET 
+  		AUTHEMAIL = #{authEmail} 
+  		WHERE USERID = #{userId}
+  	</update>
+  	<update id="updateAuthToken">
+  		UPDATE TBL_MEMBER SET 
+  		AUTHTOKEN = #{authToken} 
+  		WHERE USERID = #{userId}
+  	</update>
+  	
+  	<delete id="deleteMember">
+  		UPDATE TBL_MEMBER SET 
+  		DELSTATUS= #{delStatus} 
+  		WHERE USERID = #{userId}
+  	</delete>
+  	<delete id="deleteAuth">
+  		DELETE TBL_AUTH WHERE USERID = #{userId}
+  	</delete>
+
+  	<resultMap type="member" id="memberMap">
+  		<id property="userId" column="userid"/>
+  		<result property="userId" column="userid"/>
+  		<result property="pw" column="pw"/>
+  		<result property="email" column="email"/>
+  		<result property="phone" column="phone"/>
+
+  		<result property="regDate" column="regdate"/>
+  		<result property="updateDate" column="updatedate"/>
+  		<result property="enabled" column="enabled"/>
+  		<result property="point" column="point"/>
+  		
+  		<result property="roadAddr" column="roadaddr"/>
+  		<result property="addrDetail" column="addrdetail"/>
+  		<result property="zipNo" column="zipno"/>
+  		<result property="jibunAddr" column="jibunaddr"/>
+  		<result property="name" column="name"/>
+  		<result property="birthDate" column="birthdate"/>
+  		<result property="nickName" column="nickname"/>
+  		<result property="phone2" column="phone2"/>
+  		<result property="phone3" column="phone3"/>
+  		<result property="authToken" column="authToken"/>
+  		<result property="authEmail" column="authEmail"/>
+  		<result property="delStatus" column="delstatus"/>
+  		
+  		<collection property="auths" resultMap="authMap" />
+  	</resultMap>
+  	
+  	<resultMap type="auth" id="authMap" >
+  		<result property="userId" column="userid"/>
+  		<result property="auth" column="auth"/>
+  	</resultMap>
+  	
+  	<sql id="qna">
+	  	SELECT 
+	        /*+ INDEX(TBL_QNA IDX_QNA) */
+	        BNO, GROUPNO, TITLE, CONTENT, WRITER, regDate, CASE WHEN CNT = 0 AND GROUPNO = BNO THEN 1 ELSE 0 END REPLY, ROWNUM RN
+	    FROM TBL_QNA 
+	    JOIN (SELECT GROUPNO, COUNT(*)-1 CNT FROM TBL_QNA GROUP BY GROUPNO) 
+	    USING(GROUPNO)
+  	</sql>
+  	
+  	<select id="listQna" resultType="qna">
+	  	SELECT A.* FROM (
+	  		<include refid="qna"/>
+	  		WHERE ROWNUM &lt;= #{amount} * #{pageNum}
+	  	)A
+  	WHERE RN > #{amount} * (#{pageNum}-1)
+  	ORDER BY 2 DESC, 1
+  	</select>
+  	
+  	<select id="findQnaByWriter" resultType="qna">
+	  	<include refid="qna"/>
+	  	WHERE GROUPNO IN (SELECT GROUPNO FROM TBL_QNA WHERE WRITER = #{userId})
+	  	ORDER BY 2 DESC, 1
+  	</select>
+  	
+  	<select id="findBy" resultType="qna">
+  		<include refid="qna" />
+  		WHERE BNO = #{bno}
+  	</select>
+  	
+  	<insert id="register">
+  		<selectKey order="BEFORE" keyProperty="bno" resultType="long">
+  			SELECT SEQ_QNA.NEXTVAL FROM DUAL
+  		</selectKey>
+  		INSERT INTO TBL_QNA(BNO, GROUPNO, TITLE, CONTENT, WRITER)
+  		VALUES (#{bno}, 
+  		<if test="groupno == null">
+  			#{bno}
+  		</if>
+  		<if test="groupno != null">
+  			#{groupno}
+  		</if>
+  		, #{title}, #{content}, #{writer})
+  	</insert>
+  	
+  	<select id="getTotalCountQna" resultType="int">
+		SELECT COUNT(*) FROM TBL_QNA 
+		WHERE ROWNUM > 0
+	</select>
+  </mapper>

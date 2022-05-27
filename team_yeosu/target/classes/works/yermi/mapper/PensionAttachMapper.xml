@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="works.yermi.mapper.PensionAttachMapper">
+ 
+ <insert id="insert">
+ 	INSERT INTO TBL_PENSION_ATTACH VALUES(#{uuid}, #{origin}, #{path}, #{image}, #{ord}, #{pensionid})
+ </insert>
+ 
+ <select id="findBy" resultType="pension_attach">
+ 	SELECT * FROM TBL_PENSION_ATTACH WHERE PENSIONID = #{pensionid}
+ </select>
+ 
+ <delete id="delete">
+ 	DELETE TBL_PENSION_ATTACH WHERE UUID = #{uuid}
+ </delete>
+ 
+ <delete id="deleteAll">
+ 	DELETE TBL_PENSION_ATTACH WHERE PENSIONID = #{pensionid}
+ </delete>
+ 
+ 
+ </mapper>

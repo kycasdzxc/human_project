@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="works.yermi.mapper.RoomAttachMapper">
+ 
+ <insert id="insert">
+ 	INSERT INTO TBL_ROOM_ATTACH VALUES(#{uuid}, #{origin}, #{path}, #{image}, #{ord}, #{roomNum})
+ </insert>
+ 
+ <select id="findBy" resultType="roomattach">
+ 	SELECT * FROM TBL_ROOM_ATTACH WHERE ROOMNUM = #{roomNum}
+ </select>
+ 
+<delete id="delete">
+ 	DELETE TBL_ROOM_ATTACH WHERE UUID = #{uuid}
+ </delete>
+ 
+ <delete id="deleteAll">
+ 	DELETE TBL_ROOM_ATTACH WHERE ROOMNUM = #{roomNum}
+ </delete>
+ 
+ 
+ 
+ </mapper>

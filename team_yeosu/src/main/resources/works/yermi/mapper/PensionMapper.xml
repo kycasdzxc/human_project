@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="works.yermi.mapper.PensionMapper">
+ <sql id="filter">
+ 	<if test="pension.category == 1">
+		AND CATEGORY = 1
+	</if>
+	<if test="pension.category == 2">
+		AND CATEGORY = 2
+	</if>
+	<if test="pension.footVolleyballCourt == true">
+		AND FOOTVOLLEYBALLCOURT = 1
+	</if>
+	<if test="pension.karaoke == true">
+		AND KARAOKE = 1
+	</if>
+	<if test="pension.convenienceStore == true">
+		AND CONVENIENCESTORE = 1
+	</if>
+	<if test="pension.parkingLot == true">
+		AND PARKINGLOT = 1
+	</if>
+	<if test="pension.seminarRoom == true">
+		AND SEMINARROOM = 1
+	</if>
+	<if test="pension.bbq == true">
+		AND BBQ = 1
+	</if>
+	<if test="pension.restaurant == true">
+		AND RESTAURANT = 1
+	</if>
+	<if test="pension.wifi == true">
+		AND WIFI = 1
+	</if>
+	<if test="pension.tv == true">
+		AND TV = 1
+	</if>
+	<if test="pension.airConditioner == true">
+		AND AIRCONDITIONER = 1
+	</if>
+	<if test="pension.miniBar == true">
+		AND MINIBAR = 1
+	</if>
+	<if test="pension.bathTub == true">
+		AND BATHTUB = 1
+	</if>
+	<if test="pension.refrigerator == true">
+		AND REFRIGERATOR = 1
+	</if>
+	<if test="pension.pickup == true">
+		AND PICKUP = 1
+	</if>
+	<if test="pension.cooking == true">
+		AND COOKING = 1
+	</if>
+	<if test="pension.breakfast == true">
+		AND BREAKFAST = 1
+	</if>
+	<if test="pension.freeParking == true">
+		AND FREEPARKING = 1
+	</if>
+	<if test="pension.campfire == true">
+		AND CAMPFIRE = 1
+	</if>
+ </sql>
+ 	<select id="getList" resultType="pension">
+ 		SELECT * /*+ INDEX(TBL_PENSION IDX_PENSION) */
+ 		FROM TBL_PENSION
+ 		WHERE ENABLED = 1
+ 	</select>
+ 
+ 	<select id="getListTopten" resultType="pension">
+ 		SELECT * FROM ( 
+		    SELECT * FROM TBL_PENSION
+		    WHERE ENABLED = 1
+		    ORDER BY STARRATE DESC, REPLYCNT DESC
+		    )
+		WHERE ROWNUM &lt;= 10
+ 	</select>
+ 	
+ 	<select id="read" resultType="pension">
+ 		SELECT * FROM V_PENSION
+ 		WHERE PENSIONID = #{pensionid}
+ 	</select>
+ 	
+ 	
+ 	<insert id="insertSelectKey">
+ 	<selectKey keyProperty="pensionid" order="BEFORE" resultType="long">
+ 		SELECT SEQ_PENSION.NEXTVAL FROM DUAL
+ 	</selectKey>
+ 	INSERT INTO TBL_PENSION (
+ 		PENSIONID,
+ 	 	NAME, 
+ 	 	USERID, 
+ 	 	CATEGORY, 
+ 	 	ADDRESS, 
+ 	 	COMMENTS, 
+ 	 	ENABLED,
+ 	 	LONGITUDE,
+ 	 	LATITUDE,
+ 	 	PRICE,
+		STARRATE,
+		REPLYCNT,
+		DELSTATUS
+ 	)
+	VALUES(
+		#{pensionid}, 
+		#{name}, 
+		#{userid}, 
+		#{category}, 
+		#{address}, 
+		#{comments}, 
+		0,
+		#{longitude},
+		#{latitude},
+		0,
+		0,
+		0,
+		0
+	)
+ 	</insert>
+ 	
+ 	<insert id="insertPublic">
+ 	<selectKey keyProperty="pensionid" order="BEFORE" resultType="long">
+ 		SELECT SEQ_PENSION.CURRVAL FROM DUAL
+ 	</selectKey>
+ 	INSERT INTO TBL_PUBLIC_FACILITIES (
+ 		PENSIONID,
+ 		FOOTVOLLEYBALLCOURT, 
+ 		KARAOKE, 
+ 		CONVENIENCESTORE, 
+ 		PARKINGLOT,
+		SEMINARROOM,
+		BBQ,
+		RESTAURANT
+	)
+	VALUES (
+		#{pensionid},
+		#{footVolleyballCourt},
+		#{karaoke},
+		#{convenienceStore}, 
+ 		#{parkingLot},
+		#{seminarRoom},
+		#{bbq},
+		#{restaurant}
+	)
+ 	</insert>
+ 	
+ 	<insert id="insertInternal">
+ 	<selectKey keyProperty="pensionid" order="BEFORE" resultType="long">
+ 		SELECT SEQ_PENSION.CURRVAL FROM DUAL
+ 	</selectKey>
+ 		INSERT INTO TBL_INTERNAL_FACILITIES(
+ 			PENSIONID,
+ 			WIFI,
+			TV,
+			AIRCONDITIONER,
+			MINIBAR,
+			BATHTUB,
+			REFRIGERATOR
+ 		)
+ 		VALUES (
+ 			#{pensionid},
+ 			#{wifi},
+ 			#{tv},
+ 			#{airConditioner},
+ 			#{miniBar},
+ 			#{bathTub},
+ 			#{refrigerator}
+ 		)
+ 	</insert>
+ 	
+ 	<insert id="insertOther">
+ 	<selectKey keyProperty="pensionid" order="BEFORE" resultType="long">
+ 		SELECT SEQ_PENSION.CURRVAL FROM DUAL
+ 	</selectKey>
+ 		INSERT INTO TBL_OTHER (
+ 			PENSIONID,
+ 			PICKUP,
+			COOKING,
+			BREAKFAST,
+			FREEPARKING,
+			CAMPFIRE
+ 		)
+ 		VALUES (
+ 			#{pensionid},
+ 			#{pickup},
+ 			#{cooking},
+ 			#{breakfast},
+ 			#{freeParking},
+ 			#{campfire}
+ 		)	
+ 	</insert>
+ 	
+ 	<update id="updatePension">
+ 		UPDATE TBL_PENSION SET
+ 			NAME = #{name},
+			CATEGORY = #{category},
+			ADDRESS = #{address},
+			LONGITUDE = #{longitude},
+			LATITUDE = #{latitude}
+		WHERE PENSIONID = #{pensionid}
+ 	</update>
+ 	
+ 	<update id="updatePublic">
+ 		UPDATE TBL_PUBLIC_FACILITIES SET
+	 		FOOTVOLLEYBALLCOURT = #{footVolleyballCourt},
+			KARAOKE = #{karaoke},
+			CONVENIENCESTORE = #{convenienceStore},
+			PARKINGLOT =  #{parkingLot},
+			SEMINARROOM = #{seminarRoom},
+			BBQ = #{bbq},
+			RESTAURANT = #{restaurant}
+		WHERE PENSIONID = #{pensionid}
+ 	</update>
+ 	
+ 	<update id="updateInternal">
+ 		UPDATE TBL_INTERNAL_FACILITIES SET
+ 			WIFI = #{wifi},
+			TV = #{tv},
+			AIRCONDITIONER = #{airConditioner},
+			MINIBAR = #{miniBar},
+			BATHTUB = #{bathTub},
+			REFRIGERATOR = #{refrigerator}
+		WHERE PENSIONID = #{pensionid}
+ 	</update>
+ 	
+ 	<update id="updateOther">
+ 		UPDATE TBL_OTHER SET
+ 			PICKUP = #{pickup},
+			COOKING = #{cooking},
+			BREAKFAST = #{breakfast},
+			FREEPARKING = #{freeParking},
+			CAMPFIRE = #{campfire}
+		WHERE PENSIONID = #{pensionid}
+ 	</update>
+ 	
+ 	<update id="deletePension">
+ 		UPDATE TBL_PENSION SET
+	 		ENABLED = 0,
+	 		DELSTATUS = 1,
+	 		ADDRESS = NULL,
+	 		COMMENTS = NULL,
+	 		PRICE = 0,
+	 		STARRATE = 0,
+	 		REPLYCNT = 0,
+	 		LONGITUDE = 0,
+	 		LATITUDE = 0
+ 		WHERE PENSIONID = #{pension}
+ 	</update>
+ 	
+ 	<delete id="deletePublic">
+ 		DELETE TBL_PUBLIC_FACILITIES
+ 		WHERE PENSIONID = #{pensionid}
+ 	</delete>
+ 	
+ 	<delete id="deleteInternal">
+ 		DELETE TBL_INTERNAL_FACILITIES
+ 		WHERE PENSIONID = #{pensionid}
+ 	</delete>
+ 	
+ 	<delete id="deleteOther">
+ 		DELETE TBL_OTHER
+ 		WHERE PENSIONID = #{pensionid}
+ 	</delete>
+ 	
+ 	<select id="getListWithFilter" resultType="pension">
+ 		SELECT * FROM V_PENSION
+ 		WHERE ENABLED = 1
+		AND PENSIONID > #{cri.lastPensionid}
+		<include refid="filter"></include>
+		AND ROWNUM &lt;= #{cri.amount}
+ 	</select>
+ 	
+ 	<select id="getListWithAd" resultType="pension">
+ 		SELECT * FROM V_PENSION
+ 		WHERE ENABLED = 1
+ 		AND ADSTATUS = 1
+ 	</select>
+ 	
+ 	<select id="getListWithNotAd" resultType="pension">
+ 		SELECT * FROM (
+	 		SELECT /*+ INDEX(P IDX_PENSION) */ P.*, ROWNUM RN
+	 		FROM TBL_PENSION P
+	 		WHERE ENABLED = 1
+	 		AND ADSTATUS = 0
+	 		AND ROWNUM &lt;= #{amount} * #{pageNum}
+ 		) WHERE RN > #{amount} * (#{pageNum} - 1)
+ 		
+ 	</select>
+ 	
+ 	<select id="ListWithAd" resultType="pension">
+ 		SELECT * FROM (
+	 		SELECT /*+ INDEX(P IDX_PENSION) */ P.*, ROWNUM RN
+	 		FROM TBL_PENSION P
+	 		WHERE ENABLED = 1
+	 		AND ADSTATUS = 1
+	 		AND ROWNUM &lt;= #{amount} * #{pageNum}
+ 		) WHERE RN > #{amount} * (#{pageNum} - 1)
+ 		
+ 	</select>
+ 	
+ 	<select id="getTotalCount" resultType="int">
+ 		SELECT COUNT(*) FROM TBL_PENSION
+ 		WHERE ROWNUM > 0
+ 	</select>
+ 	
+ 	<select id="findPension" resultType="pension">
+ 		SELECT * FROM TBL_PENSION
+ 		<if test="name != null">
+ 			WHERE NAME = #{name}
+ 		</if>
+ 	</select>
+ 	
+ 	<select id="getPensionidByUserid" resultType="pension">
+ 		SELECT * FROM TBL_PENSION WHERE USERID = #{userid}
+ 	</select>
+ 	
+ 	<update id="updateReplyCnt">
+ 		UPDATE TBL_PENSION SET REPLYCNT = 
+ 			(SELECT COUNT(*) FROM TBL_REPLY WHERE PENSIONID = #{pensionid})
+ 		WHERE PENSIONID = #{pensionid}
+ 	</update>
+ 	
+ 	<update id="updateStarRate">
+ 		UPDATE TBL_PENSION SET STARRATE =
+ 			(SELECT ROUND(AVG(STARRATE), 1) FROM TBL_REPLY WHERE PENSIONID = #{pensionid})
+ 		WHERE PENSIONID = #{pensionid}
+ 	</update>
+ 	
+ 	<update id="updatePrice">
+ 		UPDATE TBL_PENSION SET PRICE = 
+ 			(SELECT MIN(PRICE) FROM TBL_ROOM WHERE PENSIONID = #{pensionid})
+ 		WHERE PENSIONID = #{pensionid}
+ 	</update>
+ 	
+ 	<update id="updateAd">
+ 		UPDATE TBL_PENSION SET
+ 		ADSTATUS = 1
+ 		WHERE PENSIONID = #{pensionid}
+ 	</update>
+
+ 	<update id="updateEnabled">
+ 		UPDATE TBL_PENSION SET
+ 		ENABLED = #{enabled}
+ 		WHERE PENSIONID = #{pensionid}
+ 	</update>
+ 	<update id="deleteAd">
+ 		UPDATE TBL_PENSION SET
+ 		ADSTATUS = 0
+ 		WHERE PENSIONID = #{pensionid}
+ 	</update>
+ 	
+ 	<select id="getListWithPaging" resultType="pension">
+ 	SELECT * 
+	FROM ( 
+	    SELECT A.*, ROWNUM RN FROM TBL_PENSION A 
+	    WHERE ROWNUM &lt;= #{pageNum} * #{amount} ) 
+	WHERE RN > (#{pageNum} - 1) * #{amount}
+	ORDER BY ENABLED, PENSIONID DESC
+ 	</select>
+ </mapper> 

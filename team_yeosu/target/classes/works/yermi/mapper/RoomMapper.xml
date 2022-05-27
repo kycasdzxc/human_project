@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="works.yermi.mapper.RoomMapper">
+ 	<select id="getList" resultType="room">
+ 		SELECT * 
+		FROM TBL_ROOM WHERE PENSIONID = #{pensionid}
+		
+ 	</select>
+ 	
+ 	<select id="getListWithPaging" resultType="room">
+ 		SELECT * /*+ INDEX(TBL_ROOM IDX_ROOM) */
+		FROM TBL_ROOM
+		WHERE ROOMNUM > #{cri.lastRoomNum}
+		AND ROWNUM &lt; = #{cri.amount}
+		AND PENSIONID = #{pensionid}
+ 	</select>
+	
+	<select id="getCheckoutList" resultType="room">
+		SELECT * FROM TBL_ROOM WHERE DEADLINE &lt;= SYSDATE
+	</select> 	
+ 	
+ 	<select id="read" resultType="room">
+ 		SELECT *
+ 		FROM TBL_ROOM
+ 		WHERE ROOMNUM = #{roomNum}
+ 	</select>
+ 	
+ 	<insert id="insertSelectKey">
+ 	<selectKey keyProperty="roomNum" order="BEFORE" resultType="long">
+ 		SELECT SEQ_ROOM.NEXTVAL FROM DUAL
+ 	</selectKey>
+ 	INSERT INTO TBL_ROOM (PENSIONID, ROOMNUM, STARTTIME, DEADLINE, RESERVATIONSTATUS,PRICE,ENABLED,ROOMNAME)
+	VALUES(#{pensionid}, 
+	#{roomNum},
+	SYSDATE, 
+	#{deadline}, 
+	#{reservationStatus}, 
+	#{price},
+	#{enabled},
+	#{roomName})
+	</insert>
+	
+	<update id="update">
+ 		UPDATE TBL_ROOM SET
+		DEADLINE = #{deadline},
+		PRICE = #{price},
+		ROOMNAME = #{roomName}
+ 		WHERE ROOMNUM = #{roomNum}
+ 	</update>
+ 	
+ 	<delete id="delete">
+ 		DELETE TBL_ROOM
+ 		WHERE ROOMNUM = #{roomNum}
+ 	</delete>
+ 
+	<update id="reserveRoom">
+ 		UPDATE TBL_ROOM SET
+		STARTTIME = TO_DATE(#{startTime}, 'YY/MM/DD'),
+		DEADLINE = TO_DATE(#{deadLine}, 'YY/MM/DD'),
+		RESERVATIONSTATUS = '1'
+ 		WHERE ROOMNUM = #{roomNum}
+ 	</update>
+ 	
+	<update id="checkoutRoom">
+ 		UPDATE TBL_ROOM SET
+		STARTTIME = NULL,
+		DEADLINE = NULL,
+		RESERVATIONSTATUS = '0'
+ 		WHERE ROOMNUM = #{roomNum}
+ 	</update>
+ </mapper> 

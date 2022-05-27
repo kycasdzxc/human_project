@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="works.yermi.mapper.PaymentMapper">
+ 
+ 	<select id="getList" resultType="payment">
+ 		SELECT
+ 			PAYMENTNUM, PAYMENTPRICE, TO_CHAR(PAYMENTDATE, 'YYYY-MM-DD HH24:MI:SS') PAYMENTDATE,
+ 			PAYMENTSTATUS, USERID, ROOMNUM, A.PENSIONID, ROOMNAME
+ 		FROM TBL_PAYMENT A
+ 		JOIN TBL_ROOM B USING(ROOMNUM)
+ 		WHERE A.PENSIONID = #{pensionid}
+ 	</select>
+ 	
+ 	<select id="getListAll" resultType="payment">
+ 		SELECT
+ 			PAYMENTNUM, PAYMENTPRICE, TO_CHAR(PAYMENTDATE, 'YYYY-MM-DD HH24:MI:SS') PAYMENTDATE,
+ 			PAYMENTSTATUS, USERID, ROOMNUM, A.PENSIONID, ROOMNAME
+ 		FROM TBL_PAYMENT A
+ 		JOIN TBL_ROOM B USING(ROOMNUM)
+ 	</select>
+ 	
+ 	<insert id="insert">
+ 		INSERT INTO TBL_PAYMENT (PAYMENTNUM, PAYMENTPRICE, USERID, ROOMNUM, PENSIONID)
+		VALUES (#{paymentNum}, #{paymentPrice}, #{userid}, #{roomNum}, #{pensionid})
+ 	</insert>
+ 	
+ 	<update id="updateStatus">
+ 		UPDATE TBL_PAYMENT SET
+		PAYMENTSTATUS = 0 WHERE PAYMENTNUM = #{paymentNum}
+ 	</update>
+ </mapper>

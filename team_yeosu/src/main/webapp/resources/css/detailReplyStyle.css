@@ -1,0 +1,318 @@
+@CHARSET "UTF-8";
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	box-sizing: border-box;
+}
+article.on {
+  		display: block;
+}
+.review .score_top {
+	padding: 31px 0;
+	text-align: center;
+}
+.review .score_wrap {
+	display: inline-block;
+	overflow: hidden;
+	text-align: center;
+}
+.score_star.star_40 {
+	background-position: 0 -49px;
+}
+.review .score_wrap .num {
+	display: inline-block;
+	position: relative;
+	top: -5px;
+	padding-left: 4px;
+	font-size: 24px;
+}
+.review .score_top p {
+	margin-top: 10px;
+	font-size: 14px;
+}
+.review .score_top p b {
+	font-size: 16px;
+}
+.review .score_top p span {
+	display: inline-block;
+	width: 32px;
+	color: rgba(0,0,0,0.08);
+}
+ul, ol, li {
+	list-style: none;
+}
+.review ul li {
+	position: relative;
+	padding: 27px 16px 16px 0;
+	border-top: 1px solid rgba(0,0,0,0.08);
+}
+.review .guest .pic {
+	display: inline-block;
+	overflow: hidden;
+	position: absolute;
+	top: 24px;
+	left: 16px;
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	background: url(//image.goodchoice.kr/images/web_v3/ico_none.png) 0 0 no-repeat;
+	background-size: 40px auto;
+}
+.review .guest .pic img {
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+}
+.review .guest .best_review {
+	display: block;
+	width: 67px;
+	height: 16px;
+	margin: 0 0 6px 64px;
+	font-size: 0px;
+	text-indent: -999px;
+	background: url(//static.goodchoice.kr/images/web_v3/img_bestreview_badge.svg) 0 0 no-repeat;
+	background-size: 100%;
+}
+.review .guest strong {
+	display: block;
+	padding: 0 16px 2px 64px;
+	font-size: 16px;
+	line-height: normal;
+}
+.score_wrap_sm {
+	margin-left: 64px;
+	display: block;
+}
+.score_wrap_sm .score_star.star_50 {
+	background-position: 0 0;
+}
+.score_wrap_sm .num {
+	display: inline-block;
+	position: relative;
+	top: -3px;
+	font-size: 14px;
+}
+.review .guest .name {
+	margin-left: 64px;
+	padding-top: 18px;
+	color: rgba(0,0,0,0.56);
+}
+.review .guest .name b {
+	font-weight: normal;
+}
+.review .guest .txt {
+	margin: 5px 0 0 64px;
+	font-size: 15px;
+	line-height: 24px;
+}
+* {
+	outline: 0;
+}
+.gallery_re {
+	position: relative;
+	margin: 10px 0 6px 64px;
+}
+.swiper-container {
+	position: relative;
+	width: 100%;
+	height: auto;
+}
+.swiper-wrapper {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	z-index: 20;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-transition-property: -webkit-transform;
+	-moz-transition-property: -moz-transform;
+	-o-transition-property: -o-transform;
+	-ms-transition-property: -ms-transform;
+	transition-property: transform;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+.review ul li {
+	position: relative;
+	padding: 27px 16px 16px 0;
+	border-top: 1px solid rgba(0,0,0,0.08);
+}
+.swiper-slide {
+	position: relative;
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+
+	-webkit-flex-shrink: 0;
+	-ms-flex: 0 0 auto;
+	flex-shrink: 0;
+	width: 100%;
+	height: 100%;
+}
+img {
+	border: 0;
+	vertical-align: top;
+	-webkit-touch-callout: none;
+}
+.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+	right: 10px;
+	left: auto;
+}
+.gallery_re .swiper-button-next, .gallery_re .swiper-button-prev, .gallery_theme .swiper-button-next, .gallery_theme .swiper-button-prev {
+	display: none;
+}
+.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+	right: 10px;
+	left: auto;
+}
+.swiper-button-prev, .swiper-button-next {
+	position: absolute;
+	top: 50%;
+	width: 27px;
+	height: 44px;
+	margin-top: -22px;
+	z-index: 10;
+	cursor: pointer;
+	-moz-background-size: 27px 44px;
+	-webkit-background-size: 27px 44px;
+	background-size: 27px 44px;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+a, input, button, div, li, textarea, form, label, select {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+.swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled {
+	opacity: 0.35;
+	cursor: auto;
+	pointer-events: none;
+}
+.swiper-button-prev, .swiper-container-rtl .swiper-button-next {
+	left: 10px;
+	right: auto;
+}
+.swiper-button-prev, .swiper-button-next {
+	position: absolute;
+	top: 50%;
+	width: 27px;
+	height: 44px;
+	margin-top: -22px;
+	z-index: 10;
+	cursor: pointer;
+	-moz-background-size: 27px 44px;
+	-webkit-background-size: 27px 44px;
+	background-size: 27px 44px;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+.review .guest .date {
+	display: inline-block;
+	margin-left: 64px;
+	padding: 9px 0 5px 0;
+}
+.review .boss {
+	position: relative;
+	margin: 12px 0 0 64px;
+	padding: 19px 16px 15px 50px;
+	border-radius: 4px;
+	background: rgb(245,245,245);
+}
+.review .boss .pic {
+	display: inline-block;
+	overflow: hidden;
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+}
+.review .boss .pic img {
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+}
+fieldset, img {
+	border: 0;
+}
+p {
+	display: block;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+}
+strong {
+	font-weight: bold;
+}
+.review .boss .txt {
+	margin: 7px 0 8px 0;
+	font-size: 15px;
+	line-height: 24px;
+	color: rgba(0,0,0,0.72);
+}
+.review .boss .date {
+	font-size: 13px;
+	color: rgba(0,0,0,0.56);
+}
+.paging {
+	display: block;
+	margin-top: 20px;
+	padding: 24px 0 48px 0;
+	border-top: 1px solid rgba(0,0,0,0.04);
+	text-align: center;
+}
+.paging .on {
+	border: 1px solid rgba(0,0,0,0.27);
+	border-radius: 4px;
+	font-weight: bold;
+	color: rgba(0,0,0,0.87);
+}
+.paging button, .paging a {
+	width: 32px;
+	height: 32px;
+	box-sizing: inherit;
+	align-items: center;
+	border-radius: 3px;
+	border: none;
+	box-shadow: none;
+	background: none;
+	font-size: 13px;
+	line-height: 1.5;
+	text-align: center;
+}
+button {
+	padding: 0;
+	cursor: pointer;
+}
+.paging .next {
+	background: url(//image.goodchoice.kr/images/web_v3/ico_arr_gt_4.png) 50% 50% no-repeat;
+	background-size: 10px auto;
+	text-indent: -9999px;
+	margin-left: 5px;
+}
+.swiper-slide img {
+    position: relative;
+    z-index: 20;
+    width: 100%;
+    color: #fff;
+}
+.swiper-container img {
+    width: 100%;
+}

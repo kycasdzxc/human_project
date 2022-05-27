@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="works.yermi.mapper.ReplyMapper">
+ 	
+ 	<insert id="insert">
+ 		INSERT INTO TBL_REPLY(PENSIONID, RNO, STARRATE, NICKNAME, REGDATE, TITLE, CONTENT)
+ 		VALUES(#{pensionid}, SEQ_REPLY.NEXTVAL, #{starRate}, #{nickName}, SYSDATE, #{title}, #{content})
+ 	</insert>
+ 	
+ 	<insert id="insertSelectKey">
+ 		<selectKey keyProperty="rno" order="BEFORE" resultType="long">
+	 		SELECT SEQ_REPLY.NEXTVAL FROM DUAL
+	 	</selectKey>
+ 		INSERT INTO TBL_REPLY(PENSIONID, RNO, STARRATE, NICKNAME, REGDATE, TITLE, CONTENT)
+ 		VALUES(#{pensionid}, #{rno}, #{starRate}, #{nickName}, SYSDATE, #{title}, #{content})
+ 	</insert>
+ 	
+ 	<resultMap type="reply" id="replyMap">
+ 		<result property="content" column="CONTENT"/>
+ 	</resultMap>
+ 	
+ 	<select id="getListWithPaging" resultMap="replyMap">
+ 		SELECT /*+ INDEX(REPLY REPLY_PK) */ * 
+		FROM TBL_REPLY 
+		WHERE PENSIONID = #{pensionid}
+		AND RNO > #{cri.lastRno}
+		AND ROWNUM &lt;= #{cri.amount}
+		ORDER BY RNO DESC
+ 	</select>
+ 	
+ 	<select id="get" resultMap="replyMap">
+ 		SELECT * FROM TBL_REPLY WHERE NICKNAME = #{nickName}
+ 	</select>
+
+ 	
+ 	<select id="read" resultMap="replyMap">
+ 		SELECT * FROM TBL_REPLY WHERE RNO = #{rno}
+ 	</select>
+ 	
+ 	<delete id="delete" >
+ 		DELETE FROM TBL_REPLY WHERE RNO = #{rno}
+ 	</delete>
+ 	
+ 	<update id="update">
+ 		UPDATE TBL_REPLY SET 
+ 			TITLE = #{title},
+ 			CONTENT = #{content},
+ 			REGDATE = SYSDATE,
+ 			STARRATE = #{starRate}
+ 		WHERE RNO = #{rno}
+ 	</update>
+ 	
+ 	<select id="readStarRate" resultType="map">
+ 		SELECT 
+		    ROUND(AVG(STARRATE)/2, 1) STAR,
+		    FLOOR(AVG(STARRATE)) SCORE, 
+		    COUNT(*) CNT ,
+		    PENSIONID
+		FROM 
+		    TBL_REPLY 
+		WHERE PENSIONID = #{pensionid} 
+		GROUP BY PENSIONID
+ 	</select>
+ 	
+ </mapper> 
