@@ -70,7 +70,7 @@
 										<div class="text">
 											<h4>${p.name}</h4>
 											<div class="post-meta">
-												<span class="mr-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${p.price}" />원</span>
+												<span class="mr-2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${p.price}" /> 원</span>
 											</div>
 										</div>
 									</a>
@@ -203,7 +203,7 @@
 		str += '	<div>'
 		str += '		<h2><a href="/pension/detail?pensionid=' + pension.pensionid + ('${startDate}' != "" ? "&startDate=" + '${startDate}' : "") + ('${endDate}' != "" ? "&endDate=" + '${endDate}' : "") + '" class="bg-white border-0">' + pension.name + '</a></h2>'
 		str += '		<p>' + pension.address + '</p>'
-		str += '		<p>가격 ' + price + '원</p>'
+		str += '		<p>가격 ' + price + ' 원</p>'
 		str += '		<p>별점 ' + pension.starRate +  '</p>'
 		str += '		<p>리뷰 ' + pension.replyCnt +  '</p>'
 		str += '	</div>'
