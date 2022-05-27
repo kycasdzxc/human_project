@@ -107,7 +107,7 @@
 								</strong>
 							</li>
 							<li class="d-inline-flex align-items-center float-end">
-							<strong class="pt-1"><fmt:formatNumber type="number" maxFractionDigits="3" value="${p.price}" />원</strong>
+							<strong class="pt-1"><fmt:formatNumber type="number" maxFractionDigits="3" value="${p.price}" /> 원</strong>
 							</li>
 						</ul>
 						<div class="location d-flex justify-content-between align-items-center">
